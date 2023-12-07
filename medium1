@@ -1,0 +1,38 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def lowestCommonAncestor(root, p, q):
+    if not root:
+        return None
+
+    # If both nodes are smaller, search in the left subtree
+    if p.val < root.val and q.val < root.val:
+        return lowestCommonAncestor(root.left, p, q)
+    
+    # If both nodes are larger, search in the right subtree
+    elif p.val > root.val and q.val > root.val:
+        return lowestCommonAncestor(root.right, p, q)
+    
+    # Current node is the LCA
+    else:
+        return root
+
+# Example usage:
+# Constructing a BST
+#        5
+#       / \
+#      3   6
+#     / \   \
+#    2   4   7
+root = TreeNode(5)
+root.left = TreeNode(3, TreeNode(2), TreeNode(4))
+root.right = TreeNode(6, right=TreeNode(7))
+
+node_p = TreeNode(2)
+node_q = TreeNode(4)
+
+lca_node = lowestCommonAncestor(root, node_p, node_q)
+print("Lowest Common Ancestor:", lca_node.val)
